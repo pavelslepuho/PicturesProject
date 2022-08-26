@@ -36,12 +36,22 @@ const modals = () => {
         document.body.style.overflow = 'hidden';
         let modalClientWidth = document.documentElement.clientWidth;
         document.body.style.paddingRight = modalClientWidth - generalClientWidth + 'px';
+        let form = document.querySelectorAll('form');
+        form.forEach(item => {
+            if (getComputedStyle(item).display === 'none') {
+                item.style.display = 'block';
+                document.querySelector('[data-message]').remove();
+            }
+        });
     }
 
     function hideModal(modalDialog) {
         modalDialog.style.display = 'none';
         document.body.style.overflow = '';
         document.body.style.paddingRight = '0px';
+        document.querySelectorAll('[data-modal]').forEach(item => {
+            item.setAttribute('data-modal', false);
+        });
     }
 
     function showModalByTime(selector, time) {
@@ -68,7 +78,6 @@ const modals = () => {
                 showModal(modal);
                 destroy = true ? document.querySelector(button).remove(): false;
                 window.removeEventListener('scroll', scroll);
-
             }
         });
     }

@@ -60,8 +60,6 @@ const sliders = (sliderSelector, direction, nextSelector, prevSelector) => {
 
         sliderItem[slideNumber].classList.add(direction);
         sliderItem[slideNumber].style.display = 'block';
-        console.log('!');
-        
     }
 
 };

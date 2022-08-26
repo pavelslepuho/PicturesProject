@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "name": "Павел Владимирович Слепухо",
+      "phone": "+375293551522",
+      "upload": "undefined",
+      "id": 1
+    },
+    {
+      "upload": "undefined",
+      "name": "Павел Владимирович Слепухо",
+      "phone": "+375293551522",
+      "email": "spav112@yandex.ru",
+      "message": "",
+      "id": 2
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
