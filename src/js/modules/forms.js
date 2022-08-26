@@ -1,89 +1,100 @@
 const forms = () => {
-    let form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input'),
-        upload = document.querySelectorAll('[name="upload"]'),
-        blob;
-
-    let messages = {
-        sending: 'Отправляем данные...',
-        success: 'Ваши данные отправлены!',
-        failure: 'Ошибка'
+    const form = document.querySelectorAll('form'),
+          inputs = document.querySelectorAll('input'),
+          upload = document.querySelectorAll('[name="upload"]');
+    
+    const message = {
+        loading: 'Загрузка...',
+        success: 'Спасибо! Скоро мы с вами свяжемся',
+        failure: 'Что-то пошло не так...',
+        spinner: 'assets/img/spinner.gif',
+        ok: 'assets/img/ok.png',
+        fail: 'assets/img/fail.png'
     };
 
-    let div = document.createElement('div'),
-        img = document.createElement('img'),
-        h4 = document.createElement('h4');
+    const path = {
+        designer: 'assets/server.php',
+        question: 'assets/question.php'
+    };
 
-    div.style.cssText = `
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    `;
-    div.setAttribute('data-message', 1);
-    div.append(img, h4);
+    const postData = async (url, data) => {
+        let res = await fetch(url, {
+            method: "POST",
+            body: data
+        });
+
+        return await res.text();
+    };
+
+    const clearInputs = () => {
+        inputs.forEach(item => {
+            item.value = '';
+        });
+        upload.forEach(item => {
+            item.previousElementSibling.textContent = "Файл не выбран";
+        });
+    };
 
     upload.forEach(item => {
-        item.addEventListener('input', (e) => {
-            e.preventDefault();
-            blob = item.files[0];
+        item.addEventListener('input', () => {
+            console.log(item.files[0]);
+            let dots;
+            const arr = item.files[0].name.split('.');
+
+            arr[0].length > 6 ? dots = "..." : dots = '.';
+            const name = arr[0].substring(0, 6) + dots + arr[1];
+            item.previousElementSibling.textContent = name;
         });
     });
 
     form.forEach(item => {
         item.addEventListener('submit', (e) => {
             e.preventDefault();
-            let formData = new FormData(item);
-            console.log(blob);
-            formData.append('upload', blob);
-            let data = JSON.stringify(Object.fromEntries(formData));
 
-            h4.textContent = messages.sending;
-            item.parentElement.append(div);
-            img.setAttribute('src', './assets/img/spinner.gif');
-            item.style.display = 'none';
+            let statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            item.parentNode.appendChild(statusMessage);
 
-            document.querySelectorAll('[data-modal]').forEach(item => {
-                item.setAttribute('data-modal', true);
-            });
+            item.classList.add('animated', 'fadeOutUp');
+            setTimeout(() => {
+                item.style.display = 'none';
+            }, 400);
 
-            let response = fetch('http://localhost:3000/posts', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: data
-            })
-                .then(response => response.json())
-                .then(result => {
-                    div.classList.add('animated', 'fadeInUp');
-                    img.removeAttribute('src');
-                    img.setAttribute('src', './assets/img/ok.png');
-                    h4.textContent = messages.success;
-                    item.style.display = 'none';
-                    console.log(result);
+            let statusImg = document.createElement('img');
+            statusImg.setAttribute('src', message.spinner);
+            statusImg.classList.add('animated', 'fadeInUp');
+            statusMessage.appendChild(statusImg);
+
+            let textMessage = document.createElement('div');
+            textMessage.textContent = message.loading;
+            statusMessage.appendChild(textMessage);
+
+            const formData = new FormData(item);
+            let api;
+            item.closest('.popup-design') || item.classList.contains('calc_form') ? api = path.designer : api = path.question;
+            console.log(api);
+
+            postData(api, formData)
+                .then(res => {
+                    console.log(res);
+                    statusImg.setAttribute('src', message.ok);
+                    textMessage.textContent = message.success;
                 })
-                .catch(error => {
-                    h4.textContent = messages.failure;
-                    item.parentElement.append(div);
-                    item.style.display = 'none';
+                .catch(() => {
+                    statusImg.setAttribute('src', message.fail);
+                    textMessage.textContent = message.failure;
                 })
-                .finally(result => {
-                    item.reset();
+                .finally(() => {
+                    clearInputs();
                     setTimeout(() => {
-                        div.classList.remove('animated', 'fadeInUp');
-                        div.remove();
+                        statusMessage.remove();
                         item.style.display = 'block';
-                        document.querySelectorAll('[data-modal=true]').forEach(item => item.style.display = 'none');
-                        img.setAttribute('src', './assets/img/spinner.gif');
-                        document.body.style.overflow = '';
-                        document.body.style.paddingRight = '0px';
-                    }, 4000);
-
+                        item.classList.remove('fadeOutUp');
+                        item.classList.add('fadeInUp');
+                    }, 5000);
                 });
         });
     });
-
-
 };
 
 export default forms;
