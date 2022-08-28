@@ -1,24 +1,40 @@
 {
-    "styles": [
-        {
-            "src": "assets/img/styles-5.jpg",
-            "title": "Пастелью",
-            "link": "#pastel"
-        },
-        {
-            "src": "assets/img/styles-6.jpg",
-            "title": "Поп-арт",
-            "link": "#popart"
-        },
-        {
-            "src": "assets/img/styles-7.png",
-            "title": "Фотомозаика",
-            "link": "#mozaika"
-        },
-        {
-            "src": "assets/img/styles-8.jpg",
-            "title": "Шарж",
-            "link": "#sharj"
-        }
-    ]
+  "styles": [
+    {
+      "src": "assets/img/styles-5.jpg",
+      "title": "Пастелью",
+      "link": "#pastel"
+    },
+    {
+      "src": "assets/img/styles-6.jpg",
+      "title": "Поп-арт",
+      "link": "#popart"
+    },
+    {
+      "src": "assets/img/styles-7.png",
+      "title": "Фотомозаика",
+      "link": "#mozaika"
+    },
+    {
+      "src": "assets/img/styles-8.jpg",
+      "title": "Шарж",
+      "link": "#sharj"
+    }
+  ],
+  "calc": [
+    {
+      "size": "500",
+      "material": "1",
+      "options": "600",
+      "result": 1100,
+      "id": 3
+    },
+    {
+      "size": "500",
+      "material": "1.2",
+      "options": "400",
+      "result": 1000,
+      "id": 4
+    }
+  ]
 }
