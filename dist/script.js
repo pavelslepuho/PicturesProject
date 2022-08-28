@@ -4488,7 +4488,53 @@ var checkTextInputs = function checkTextInputs(selector) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var filter = function filter() {};
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var filter = function filter() {
+  var portfolio = document.querySelector('.portfolio-wrapper'),
+      menu = document.querySelector('.portfolio-menu'),
+      tabs = document.querySelectorAll('.portfolio-menu > li'),
+      targets = document.querySelectorAll('.portfolio-block'),
+      portfolioNo = document.querySelector('#portfolio .portfolio-no');
+  menu.addEventListener('click', function (e) {
+    if (e.target.tagName === 'LI') {
+      tabs.forEach(function (item) {
+        item.classList.remove('active');
+
+        if (item === e.target) {
+          item.classList.add('active');
+          var dataClass = item.getAttribute('data-class');
+          showPortfolio(targets, dataClass);
+        }
+      });
+    }
+  });
+
+  function showPortfolio(group, attr) {
+    var count = 0;
+    group.forEach(function (item) {
+      item.style.display = 'none';
+
+      if (item.classList.contains(attr)) {
+        item.classList.add('animated', 'fadeInUp');
+        item.style.display = 'block';
+        count++;
+      }
+    });
+
+    if (count === 0) {
+      portfolioNo.style.display = 'block';
+    } else if (count < 5) {
+      portfolio.style.justifyContent = 'center';
+      portfolioNo.style.display = 'none';
+    } else {
+      portfolio.style.justifyContent = 'left';
+      portfolioNo.style.display = 'none';
+    }
+  }
+};
 
 /* harmony default export */ __webpack_exports__["default"] = (filter);
 
