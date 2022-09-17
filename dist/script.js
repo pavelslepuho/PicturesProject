@@ -4352,6 +4352,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
 /* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
 /* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+/* harmony import */ var _modules_pictureSize__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/pictureSize */ "./src/js/modules/pictureSize.js");
+/* harmony import */ var _modules_accordeon__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordeon */ "./src/js/modules/accordeon.js");
+
+
 
 
 
@@ -4373,7 +4377,56 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])();
   Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])();
   Object(_modules_filter__WEBPACK_IMPORTED_MODULE_7__["default"])();
+  Object(_modules_pictureSize__WEBPACK_IMPORTED_MODULE_8__["default"])('.sizes-block');
+  Object(_modules_accordeon__WEBPACK_IMPORTED_MODULE_9__["default"])();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordeon.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordeon.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var accordeon = function accordeon() {
+  var accordionBlock = document.querySelectorAll('.accordion-heading');
+  accordionBlock.forEach(function (item) {
+    item.nextElementSibling.style.cssText = "\n            height: 0px;\n            overflow: hidden;\n            padding-top: 0rem;\n            padding-bottom: 0rem;\n            min-height: 0px;\n            opacity: 0;\n        ";
+    item.addEventListener('click', function () {
+      var state = 0;
+      item.classList.toggle('active');
+
+      if (item.classList.contains('active')) {
+        state = 1;
+      }
+
+      accordionBlock.forEach(function (block) {
+        block.classList.remove('active');
+        block.nextElementSibling.style.cssText = "\n                    transition: 0.5s all;\n                    height: 0px;\n                    overflow: hidden;\n                    padding-top: 0rem;\n                    padding-bottom: 0rem;\n                    min-height: 0px;\n                    opacity: 0;\n                ";
+      });
+
+      if (state === 1) {
+        item.classList.add('active');
+      }
+
+      if (item.classList.contains('active')) {
+        item.nextElementSibling.style.cssText = "\n                    transition: 0.5s all;\n                    height: auto;\n                    overflow: visible;\n                    opacity: 1;\n                ";
+      } else {
+        item.nextElementSibling.style.cssText = "\n                    transition: 0.5s all;\n                    height: 0px;\n                    overflow: hidden;\n                    padding-top: 0rem;\n                    padding-bottom: 0rem;\n                    min-height: 0px;\n                    opacity: 0;\n                ";
+      }
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordeon);
 
 /***/ }),
 
@@ -4840,6 +4893,49 @@ var modals = function modals() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
+
+/***/ }),
+
+/***/ "./src/js/modules/pictureSize.js":
+/*!***************************************!*\
+  !*** ./src/js/modules/pictureSize.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
+
+
+var pictureSize = function pictureSize(imgSelector) {
+  var pictures = document.querySelectorAll(imgSelector);
+  pictures.forEach(function (item, i) {
+    item.addEventListener('mouseover', function () {
+      item.children.forEach(function (elem) {
+        if (elem.tagName === "P") {
+          elem.style.display = 'none';
+        } else if (elem.tagName === "IMG") {
+          elem.setAttribute('src', "../assets/img/sizes-".concat(i + 1, "-1.png"));
+        }
+      });
+    });
+  });
+  pictures.forEach(function (item, i) {
+    item.addEventListener('mouseout', function () {
+      item.children.forEach(function (elem) {
+        if (elem.tagName === "P") {
+          elem.style.display = 'block';
+        } else if (elem.tagName === "IMG") {
+          elem.setAttribute('src', "../assets/img/sizes-".concat(i + 1, ".png"));
+        }
+      });
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (pictureSize);
 
 /***/ }),
 

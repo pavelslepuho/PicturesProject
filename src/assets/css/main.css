@@ -631,6 +631,11 @@ h4 {
   padding: 1rem 2rem;
   cursor: pointer;
 }
+.active {
+  color: #c51abb;
+
+}
+
 .portfolio ul .active {
   border: 1px solid #c51abb;
   color: #c51abb;

@@ -6,6 +6,8 @@ import checkTextInputs from './modules/checkTextInputs';
 import showMoreStyles from './modules/showMoreStyles';
 import calc from './modules/calc';
 import filter from './modules/filter';
+import pictureSize from './modules/pictureSize';
+import accordeon from "./modules/accordeon";
 
 window.addEventListener('DOMContentLoaded', () => {
     'use strict';
@@ -19,4 +21,6 @@ window.addEventListener('DOMContentLoaded', () => {
     showMoreStyles();
     calc();
     filter();
+    pictureSize('.sizes-block');
+    accordeon();
 });
